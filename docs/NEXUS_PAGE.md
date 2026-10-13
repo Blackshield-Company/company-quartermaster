@@ -1,17 +1,17 @@
 # Nexus Mods page: Company Quartermaster
 
-Early beta: v0.2.0 passes every automated build check but nobody has playtested it in game yet. The page says this at the top. The exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
+Early beta: v0.2.1 passes every automated build check but nobody has playtested it in game yet. The page says this at the top. The exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
 
 ## Page settings
 
 - **Game:** Skyrim Special Edition
 - **Mod name:** Company Quartermaster
-- **Version:** 0.2.0 (early beta)
+- **Version:** 0.2.1 (early beta)
 - **Category:** Gameplay
 - **Suggested tags:** Gameplay, Economy, Followers, Lore-Friendly, ESL, No SKSE, Scripted
 - **Requirements:** none. Ember Smithing is optional and is not a master.
 - **Permissions (suggested):** the source is on GitHub under MIT, so allow modification and conversions with credit, but not re-uploads of the archive itself.
-- **File to upload:** `CompanyQuartermaster-0.2.0.zip` (FOMOD) as the main file, named "Company Quartermaster".
+- **File to upload:** `CompanyQuartermaster-0.2.1.zip` (FOMOD) as the main file, named "Company Quartermaster".
 
 ## Description (paste into the BBCode editor)
 
@@ -19,7 +19,7 @@ Early beta: v0.2.0 passes every automated build check but nobody has playtested 
 [center][size=6][b]COMPANY QUARTERMASTER[/b][/size]
 [size=3][i]No hall. An inn, a ledger, and a woman who counts.[/i][/size]
 
-[size=3][color=#e0a030][b]EARLY BETA (v0.2.0)[/b]: this version passes every automated build check but hasn't been playtested in game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log. Saves from 0.1.0 keep working.[/color][/size][/center]
+[size=3][color=#e0a030][b]EARLY BETA (v0.2.1)[/b]: this version passes every automated build check but hasn't been playtested in game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log. Saves from 0.1.0 and 0.2.0 keep working.[/color][/size][/center]
 
 [line]
 
@@ -38,6 +38,9 @@ The Blackshield Company has no hall of its own, so the hire is at an inn. Base g
 [/list]
 
 If Ember Smithing is installed, the refit menu also offers an ember refit (+60 armor, +15% damage) for charcoal and fire salts. Without that mod the option is hidden. This mod does not require it.
+
+[size=4][b]Changing her look[/b][/size]
+In SSEEdit open CompanyQuartermaster.esp, find NPC CQM_Brynja (xx000820), change Head Parts, Hair Color, race or outfit (or save it into your own override plugin), then hire her again. For a custom face, export FaceGen in the Creation Kit (Ctrl+F4) or you may get a dark face.
 
 [size=4][b]Requirements[/b][/size]
 [list]

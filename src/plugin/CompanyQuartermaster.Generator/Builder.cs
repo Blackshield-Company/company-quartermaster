@@ -102,23 +102,18 @@ internal sealed class Builder
             },
         });
 
-        const NpcConfiguration.TemplateFlag looksAndGear = NpcConfiguration.TemplateFlag.Traits | NpcConfiguration.TemplateFlag.Stats
-            | NpcConfiguration.TemplateFlag.ModelAnimation | NpcConfiguration.TemplateFlag.Inventory
-            | NpcConfiguration.TemplateFlag.AttackData | NpcConfiguration.TemplateFlag.Keywords;
         var npc = new Npc(Id("CQM_Brynja"), R)
         {
             EditorID = "CQM_Brynja",
             Name = "Brynja Tally-Hand",
             ShortName = "Brynja",
             ObjectBounds = Bounds(-22, -14, 0, 22, 14, 128),
-            Template = new FormLinkNullable<INpcSpawnGetter>(LCharBanditMeleeNordF),
             Race = L<IRaceGetter>(NordRace),
             Class = L<IClassGetter>(ClassWarrior1H),
             CombatStyle = L<ICombatStyleGetter>(CsHumanMelee).AsNullable(),
             Configuration = new NpcConfiguration
             {
-                Flags = NpcConfiguration.Flag.AutoCalcStats | NpcConfiguration.Flag.Unique | NpcConfiguration.Flag.Protected,
-                TemplateFlags = looksAndGear,
+                Flags = NpcConfiguration.Flag.AutoCalcStats | NpcConfiguration.Flag.Unique | NpcConfiguration.Flag.Protected | NpcConfiguration.Flag.Female,
                 Level = new PcLevelMult { LevelMult = 1 },
                 CalcMinLevel = 1,
                 CalcMaxLevel = 0,
@@ -133,6 +128,19 @@ internal sealed class Builder
             PlayerSkills = new PlayerSkills(),
             Height = 1,
             Weight = 50,
+        };
+        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleHeadNord));
+        npc.HeadParts.Add(L<IHeadPartGetter>(HairFemaleNord02));
+        npc.HeadParts.Add(L<IHeadPartGetter>(HairLineFemaleNord02));
+        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleEyesHumanBrown));
+        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleBrowsHuman03));
+        npc.DefaultOutfit = L<IOutfitGetter>(ArmorIronandHideMixed).AsNullable();
+        npc.Items = new ExtendedList<ContainerEntry>
+        {
+            new ContainerEntry
+            {
+                Item = new ContainerItem { Item = L<IItemGetter>(IronSword), Count = 1 },
+            },
         };
         npc.Factions.Add(new RankPlacement { Faction = L<IFactionGetter>(faction.FormKey), Rank = 0 });
         Add(npc);

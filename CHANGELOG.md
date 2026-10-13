@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] - 2026-10-13
+
+### Fixed
+- Brynja looked like a different female bandit each hire because her NPC used the leveled bandit list LCharBanditMeleeNordF as a template with the Traits flag; she is now a unique non-templated Nord woman with fixed vanilla head parts, hair, iron-and-hide outfit and iron sword.
+
+Saves from 0.2.0 and 0.1.0 keep working; no FormIDs changed. A Brynja already hired in an old save keeps her old look until dismissed and hired again.
+
 ## [0.2.0] - 2026-10-12
 
 ### Added
