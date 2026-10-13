@@ -1,7 +1,8 @@
 Scriptname CQM_QuartermasterScript extends Quest
-{Company Quartermaster - hire Brynja Tally-Hand at an inn. She sells supplies,
-buys listed clutter in bulk, refits follower gear, and keeps a stash per
-follower. She is not a teammate and never takes a follower slot.
+{Company Quartermaster - hire Brynja Tally-Hand at an inn, or at company HQ
+once one is set. She sells supplies, buys listed clutter in bulk, refits
+follower gear, and keeps a stash per follower. She is not a teammate and
+never takes a follower slot.
 No RegisterForUpdate loop: menus come from the lesser power, catch-up from
 OnLocationChange / OnPlayerLoadGame, refit expiry from one game-time timer.}
 
@@ -15,12 +16,15 @@ GlobalVariable Property CQM_CatchupDistance Auto
 GlobalVariable Property CQM_EmberPresent Auto
 GlobalVariable Property CQM_Hired Auto
 GlobalVariable Property CQM_Traveling Auto
+GlobalVariable Property CQM_HQSet Auto
+GlobalVariable Property CQM_HQMode Auto
 
 ActorBase Property CQM_Brynja Auto
 Spell Property CQM_PowerQuartermaster Auto
 Spell Property CQM_AbRepaired Auto
 Spell Property CQM_AbEmberRepaired Auto
 Keyword Property LocTypeInn Auto
+Keyword Property LocTypePlayerHouse Auto
 
 MiscObject Property Gold001 Auto
 MiscObject Property LeatherStrips Auto
@@ -32,9 +36,12 @@ FormList[] Property JunkLists Auto
 Int[] Property TierValues Auto
 ObjectReference[] Property Stashes Auto
 ObjectReference Property CQM_CampMarker Auto
+ObjectReference Property CQM_HQMarker Auto
 
 ReferenceAlias Property CQM_TravelAlias Auto
 ReferenceAlias Property CQM_CampAlias Auto
+ReferenceAlias Property CQM_HQAlias Auto
+Quest Property CQM_HQQuest Auto
 Quest Property CQM_FollowerQuest Auto
 ReferenceAlias[] Property Followers Auto
 
@@ -44,6 +51,7 @@ Message Property CQM_MsgHire Auto
 Message Property CQM_MsgNoGold Auto
 Message Property CQM_MsgHiredTravel Auto
 Message Property CQM_MsgHiredCamp Auto
+Message Property CQM_MsgHiredHQ Auto
 Message Property CQM_MsgTooFar Auto
 Message Property CQM_MsgSellConfirm Auto
 Message Property CQM_MsgSellNone Auto
@@ -56,6 +64,9 @@ Message Property CQM_MsgEmberMats Auto
 Message Property CQM_MsgRepairFull Auto
 Message Property CQM_MsgStashFull Auto
 Message Property CQM_MsgDismiss Auto
+Message Property CQM_MsgDismissHQ Auto
+Message Property CQM_MsgHQ Auto
+Message Property CQM_MsgHQNotHere Auto
 Message Property CQM_MsgFallen Auto
 
 Int Property STASH_COUNT = 8 AutoReadOnly
@@ -65,6 +76,7 @@ Actor[] stashOwners
 Actor[] repairActors
 Float[] repairUntil
 Int[] repairKind
+Location hqLocation
 
 Event OnInit()
 	EnsureArrays()
@@ -81,6 +93,7 @@ Function GameLoaded()
 	EnsureArrays()
 	CheckEmber()
 	EnsurePower()
+	RememberHQ()
 	SyncState()
 	CatchUp()
 	ScheduleRepair()
@@ -127,7 +140,18 @@ Actor Function Brynja()
 	If a
 		Return a
 	EndIf
-	Return CQM_CampAlias.GetActorReference()
+	a = CQM_CampAlias.GetActorReference()
+	If a
+		Return a
+	EndIf
+	Return HQActor()
+EndFunction
+
+Actor Function HQActor()
+	If !CQM_HQQuest.IsRunning()
+		Return None
+	EndIf
+	Return CQM_HQAlias.GetActorReference()
 EndFunction
 
 Bool Function HiredAlive()
@@ -143,22 +167,74 @@ Function SyncState()
 		CQM_Hired.SetValueInt(1)
 		If CQM_TravelAlias.GetActorReference()
 			CQM_Traveling.SetValueInt(1)
+			CQM_HQMode.SetValueInt(0)
+		ElseIf HQActor()
+			CQM_Traveling.SetValueInt(0)
+			CQM_HQMode.SetValueInt(1)
 		Else
 			CQM_Traveling.SetValueInt(0)
+			CQM_HQMode.SetValueInt(0)
 		EndIf
 	Else
 		CQM_Hired.SetValueInt(0)
 		CQM_Traveling.SetValueInt(0)
+		CQM_HQMode.SetValueInt(0)
 	EndIf
 EndFunction
 
 Bool Function InInn()
-	Actor player = Game.GetPlayer()
-	Location loc = player.GetCurrentLocation()
+	Location loc = Game.GetPlayer().GetCurrentLocation()
 	If !loc
 		Return False
 	EndIf
 	Return loc.HasKeyword(LocTypeInn)
+EndFunction
+
+Bool Function ValidHQLocation(Location loc)
+	If !loc
+		Return False
+	EndIf
+	If loc.HasKeyword(LocTypeInn)
+		Return True
+	EndIf
+	Return loc.HasKeyword(LocTypePlayerHouse)
+EndFunction
+
+Bool Function CanHireHere()
+	If InInn()
+		Return True
+	EndIf
+	If CQM_HQSet.GetValueInt() != 1
+		Return False
+	EndIf
+	Location here = Game.GetPlayer().GetCurrentLocation()
+	If !here
+		Return False
+	EndIf
+	If hqLocation && here == hqLocation
+		Return True
+	EndIf
+	If !hqLocation
+		Location marked = CQM_HQMarker.GetCurrentLocation()
+		Return marked && here == marked
+	EndIf
+	Return False
+EndFunction
+
+Function RememberHQ()
+	If hqLocation || CQM_HQSet.GetValueInt() != 1
+		Return
+	EndIf
+	Location marked = CQM_HQMarker.GetCurrentLocation()
+	If marked
+		hqLocation = marked
+	EndIf
+EndFunction
+
+Function EnsureHQQuest()
+	If !CQM_HQQuest.IsRunning()
+		CQM_HQQuest.Start()
+	EndIf
 EndFunction
 
 Bool Function NearBrynja()
@@ -190,7 +266,7 @@ Function UsePower()
 EndFunction
 
 Function OfferHire()
-	If !InInn()
+	If !CanHireHere()
 		CQM_MsgNotInn.Show()
 		Return
 	EndIf
@@ -215,6 +291,8 @@ EndFunction
 Function Hire(Actor player)
 	Actor b = player.PlaceActorAtMe(CQM_Brynja)
 	CQM_CampAlias.Clear()
+	EnsureHQQuest()
+	CQM_HQAlias.Clear()
 	CQM_TravelAlias.ForceRefTo(b)
 	Float ang = player.GetAngleZ()
 	b.MoveTo(player, -100.0 * Math.Sin(ang), -100.0 * Math.Cos(ang), 0.0)
@@ -224,6 +302,7 @@ Function Hire(Actor player)
 	b.EvaluatePackage()
 	CQM_Hired.SetValueInt(1)
 	CQM_Traveling.SetValueInt(1)
+	CQM_HQMode.SetValueInt(0)
 	Debug.Notification("Brynja Tally-Hand signs on.")
 	Debug.Trace("[CompanyQuartermaster] CQM_ hired")
 EndFunction
@@ -232,6 +311,8 @@ Function OpenHiredMenu()
 	Int choice = -1
 	If CQM_TravelAlias.GetActorReference()
 		choice = CQM_MsgHiredTravel.Show()
+	ElseIf HQActor()
+		choice = CQM_MsgHiredHQ.Show()
 	Else
 		choice = CQM_MsgHiredCamp.Show()
 	EndIf
@@ -244,6 +325,8 @@ Function OpenHiredMenu()
 	ElseIf choice == 3
 		ToggleTravel()
 	ElseIf choice == 4
+		OpenHQMenu()
+	ElseIf choice == 5
 		AskDismiss()
 	EndIf
 EndFunction
@@ -507,18 +590,27 @@ Function ToggleTravel()
 		Debug.Trace("[CompanyQuartermaster] CQM_ camp")
 	Else
 		CQM_CampAlias.Clear()
+		If CQM_HQQuest.IsRunning()
+			CQM_HQAlias.Clear()
+		EndIf
 		CQM_TravelAlias.ForceRefTo(b)
 		Float ang = player.GetAngleZ()
 		b.MoveTo(player, -100.0 * Math.Sin(ang), -100.0 * Math.Cos(ang), 0.0)
 		CQM_Traveling.SetValueInt(1)
+		CQM_HQMode.SetValueInt(0)
 		b.EvaluatePackage()
 		Debug.Notification("Brynja travels with the company.")
 		Debug.Trace("[CompanyQuartermaster] CQM_ travel")
 	EndIf
 EndFunction
 
-; Fast travel and load. Camp mode does not move her.
+; Fast travel and load. Camp mode does not move her. HQ mode returns her to the HQ cell.
 Function CatchUp()
+	CatchUpTravel()
+	CatchUpHQ()
+EndFunction
+
+Function CatchUpTravel()
 	Actor b = CQM_TravelAlias.GetActorReference()
 	If !b || b.IsDead() || b.IsDisabled()
 		Return
@@ -541,10 +633,118 @@ Function CatchUp()
 	EndIf
 EndFunction
 
+Function CatchUpHQ()
+	If CQM_HQMode.GetValueInt() != 1
+		Return
+	EndIf
+	If !CQM_HQQuest.IsRunning()
+		Return
+	EndIf
+	Actor b = CQM_HQAlias.GetActorReference()
+	If !b || b.IsDead() || b.IsDisabled()
+		Return
+	EndIf
+	If b.GetParentCell() != CQM_HQMarker.GetParentCell()
+		b.MoveTo(CQM_HQMarker)
+		b.EvaluatePackage()
+		Debug.Trace("[CompanyQuartermaster] CQM_ HQ catch-up")
+	EndIf
+EndFunction
+
+Function OpenHQMenu()
+	Int choice = CQM_MsgHQ.Show()
+	If choice == 0
+		SetHQHere()
+	ElseIf choice == 1
+		SendToHQ(True)
+	ElseIf choice == 2
+		ClearHQ()
+	EndIf
+EndFunction
+
+Function SetHQHere()
+	Actor player = Game.GetPlayer()
+	Location loc = player.GetCurrentLocation()
+	If !ValidHQLocation(loc)
+		CQM_MsgHQNotHere.Show()
+		Return
+	EndIf
+	CQM_HQMarker.MoveTo(player)
+	CQM_HQSet.SetValueInt(1)
+	hqLocation = loc
+	Debug.Notification("Company HQ set here.")
+	Debug.Trace("[CompanyQuartermaster] CQM_ HQ set")
+	If CQM_HQMode.GetValueInt() == 1 || HQActor()
+		SendToHQ(False)
+	EndIf
+EndFunction
+
+Function SendToHQ(Bool notify)
+	Actor b = Brynja()
+	If !b || CQM_HQSet.GetValueInt() != 1
+		Return
+	EndIf
+	EnsureHQQuest()
+	If !CQM_HQQuest.IsRunning()
+		Debug.Trace("[CompanyQuartermaster] CQM_ HQ quest failed to start")
+		Return
+	EndIf
+	CQM_TravelAlias.Clear()
+	CQM_CampAlias.Clear()
+	CQM_HQAlias.ForceRefTo(b)
+	b.MoveTo(CQM_HQMarker)
+	CQM_HQMode.SetValueInt(1)
+	CQM_Traveling.SetValueInt(0)
+	b.EvaluatePackage()
+	If notify
+		Debug.Notification("Brynja waits at company HQ.")
+	EndIf
+	Debug.Trace("[CompanyQuartermaster] CQM_ HQ mode")
+EndFunction
+
+Function ClearHQ()
+	CQM_HQSet.SetValueInt(0)
+	hqLocation = None
+	Actor b = Brynja()
+	Bool atHQ = CQM_HQMode.GetValueInt() == 1
+	If HQActor()
+		atHQ = True
+	EndIf
+	If atHQ && b
+		If CQM_HQQuest.IsRunning()
+			CQM_HQAlias.Clear()
+		EndIf
+		CQM_CampMarker.MoveTo(b)
+		CQM_CampAlias.ForceRefTo(b)
+		CQM_HQMode.SetValueInt(0)
+		CQM_Traveling.SetValueInt(0)
+		b.EvaluatePackage()
+		Debug.Notification("Brynja makes camp.")
+		Debug.Trace("[CompanyQuartermaster] CQM_ HQ cleared")
+		Return
+	EndIf
+	CQM_HQMode.SetValueInt(0)
+	Debug.Notification("Company HQ cleared.")
+	Debug.Trace("[CompanyQuartermaster] CQM_ HQ cleared")
+EndFunction
+
 Function AskDismiss()
+	If CQM_HQSet.GetValueInt() == 1
+		Int choice = CQM_MsgDismissHQ.Show()
+		If choice == 0
+			SendToHQ(True)
+		ElseIf choice == 1
+			ReleaseHer()
+		EndIf
+		Return
+	EndIf
 	If CQM_MsgDismiss.Show() != 0
 		Return
 	EndIf
+	ReleaseHer()
+EndFunction
+
+Function ReleaseHer()
 	Actor b = Brynja()
 	DismissBody(b)
 	Debug.Notification("Brynja Tally-Hand takes her leave.")
@@ -554,6 +754,9 @@ EndFunction
 Function DismissBody(Actor b)
 	CQM_TravelAlias.Clear()
 	CQM_CampAlias.Clear()
+	If CQM_HQQuest.IsRunning()
+		CQM_HQAlias.Clear()
+	EndIf
 	If b
 		b.SetPlayerTeammate(False, False)
 		b.Disable()
@@ -561,4 +764,5 @@ Function DismissBody(Actor b)
 	EndIf
 	CQM_Hired.SetValueInt(0)
 	CQM_Traveling.SetValueInt(0)
+	CQM_HQMode.SetValueInt(0)
 EndFunction

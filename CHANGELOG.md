@@ -2,6 +2,16 @@
 
 All notable changes to this project are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-10-12
+
+### Added
+- Company HQ. Set it at an inn or a house you own, then send Brynja there to wait. You can hire her there again. On a load or a location change she returns to that cell if she has left it.
+
+### Changed
+- Dismiss, when a company HQ is set, asks whether to send her to HQ or release her from service.
+
+Saves from 0.1.0 keep working. Existing FormIDs are unchanged. This version only adds new records.
+
 ## [0.1.0] - 2026-10-12
 
 Early beta. First public release. It passes every automated check in the build (Papyrus compile, plugin validation, round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Please report problems on the Nexus page or on GitHub.

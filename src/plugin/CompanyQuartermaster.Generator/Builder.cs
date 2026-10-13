@@ -17,6 +17,7 @@ internal sealed class Builder
     public const int AliasPlayer = 0;
     public const int AliasTravel = 1;
     public const int AliasCamp = 2;
+    public const int AliasHQ = 0;
     public const int FollowerAliases = 5;
     public const int StashCount = 8;
 
@@ -33,6 +34,7 @@ internal sealed class Builder
     {
         var qMain = Id("CQM_QuartermasterQuest");
         var qFollow = Id("CQM_FollowerQuest");
+        var qHQ = Id("CQM_HQQuest");
 
         var gGranted = Global("CQM_PowerGranted", 0);
         var gHire = Global("CQM_HireCost", 500);
@@ -44,6 +46,8 @@ internal sealed class Builder
         var gEmber = Global("CQM_EmberPresent", 0);
         var gHired = Global("CQM_Hired", 0);
         var gTraveling = Global("CQM_Traveling", 0);
+        var gHQSet = Global("CQM_HQSet", 0);
+        var gHQMode = Global("CQM_HQMode", 0);
 
         var tiers = new (string Edid, int Value, FormKey[] Items)[]
         {
@@ -79,6 +83,7 @@ internal sealed class Builder
         for (int i = 0; i < StashCount; i++)
             stashes[i] = Place(cell, $"CQM_StashRef{i + 1:00}", stashBase, 160f * i, 200, 0);
         var campMarker = Place(cell, "CQM_CampMarkerRef", XMarker, 0, 400, 0);
+        var hqMarker = Place(cell, "CQM_HQMarkerRef", XMarker, 400, 400, 0);
 
         var faction = Add(new Faction(Id("CQM_VendorFaction"), R)
         {
@@ -172,10 +177,12 @@ internal sealed class Builder
         var msgNotInn = Notice("CQM_MsgNotInn", Texts.NotInn);
         var msgHire = Msg("CQM_MsgHire", Texts.Hire, Btn("Hire"), Btn("Cancel"));
         var msgNoGold = Notice("CQM_MsgNoGold", Texts.NoGold);
-        var hiredButtonsTravel = new[] { Btn("Trade supplies"), Btn("Sell all junk"), Btn("Follower services"), Btn("Make camp here"), Btn("Dismiss"), Btn("Cancel") };
-        var hiredButtonsCamp = new[] { Btn("Trade supplies"), Btn("Sell all junk"), Btn("Follower services"), Btn("Travel with the company"), Btn("Dismiss"), Btn("Cancel") };
+        var hiredButtonsTravel = new[] { Btn("Trade supplies"), Btn("Sell all junk"), Btn("Follower services"), Btn("Make camp here"), Btn("Company HQ"), Btn("Dismiss"), Btn("Cancel") };
+        var hiredButtonsCamp = new[] { Btn("Trade supplies"), Btn("Sell all junk"), Btn("Follower services"), Btn("Travel with the company"), Btn("Company HQ"), Btn("Dismiss"), Btn("Cancel") };
+        var hiredButtonsHQ = new[] { Btn("Trade supplies"), Btn("Sell all junk"), Btn("Follower services"), Btn("Travel with the company"), Btn("Company HQ"), Btn("Dismiss"), Btn("Cancel") };
         var msgTravel = Msg("CQM_MsgHiredTravel", Texts.HiredTravel, hiredButtonsTravel);
         var msgCamp = Msg("CQM_MsgHiredCamp", Texts.HiredCamp, hiredButtonsCamp);
+        var msgHiredHQ = Msg("CQM_MsgHiredHQ", Texts.HiredHQ, hiredButtonsHQ);
         var msgTooFar = Notice("CQM_MsgTooFar", Texts.TooFar);
         var msgSell = Msg("CQM_MsgSellConfirm", Texts.SellConfirm, Btn("Sell"), Btn("Cancel"));
         var msgSellNone = Notice("CQM_MsgSellNone", Texts.SellNone);
@@ -193,6 +200,13 @@ internal sealed class Builder
         var msgRepairFull = Notice("CQM_MsgRepairFull", Texts.RepairFull);
         var msgStashFull = Notice("CQM_MsgStashFull", Texts.StashFull);
         var msgDismiss = Msg("CQM_MsgDismiss", Texts.Dismiss, Btn("Dismiss"), Btn("Cancel"));
+        var msgDismissHQ = Msg("CQM_MsgDismissHQ", Texts.DismissHQ, Btn("Send her to HQ"), Btn("Release her from service"), Btn("Cancel"));
+        var sendHQ = Btn("Send her to HQ");
+        sendHQ.Conditions.Add(Cond.Global(gHQSet, CompareOperator.EqualTo, 1));
+        var clearHQ = Btn("Clear HQ");
+        clearHQ.Conditions.Add(Cond.Global(gHQSet, CompareOperator.EqualTo, 1));
+        var msgHQ = Msg("CQM_MsgHQ", Texts.HQ, Btn("Set company HQ here"), sendHQ, clearHQ, Btn("Cancel"));
+        var msgHQNotHere = Notice("CQM_MsgHQNotHere", Texts.HQNotHere);
         var msgFallen = Notice("CQM_MsgFallen", Texts.Fallen);
 
         var follow = Add(new Quest(qFollow, R)
@@ -217,6 +231,17 @@ internal sealed class Builder
             follow.Aliases.Add(a);
         }
         follow.NextAliasID = FollowerAliases;
+
+        var hq = Add(new Quest(qHQ, R)
+        {
+            EditorID = "CQM_HQQuest",
+            Name = "Company HQ",
+            Priority = 30,
+            Type = Quest.TypeEnum.None,
+            QuestFormVersion = VanillaQuestFormVersion,
+        });
+        hq.Aliases.Add(AliasWithPackage(AliasHQ, "CQM_HQAlias", DefaultSandboxCurrentLocation1024));
+        hq.NextAliasID = 1;
         follow.Stages.Add(new QuestStage
         {
             Index = 10,
@@ -245,24 +270,29 @@ internal sealed class Builder
                 Vmad.Obj("CQM_SellRate", gSell), Vmad.Obj("CQM_RepairDays", gDays), Vmad.Obj("CQM_RepairGold", gRepairGold),
                 Vmad.Obj("CQM_CatchupDistance", gCatchup), Vmad.Obj("CQM_EmberPresent", gEmber),
                 Vmad.Obj("CQM_Hired", gHired), Vmad.Obj("CQM_Traveling", gTraveling),
+                Vmad.Obj("CQM_HQSet", gHQSet), Vmad.Obj("CQM_HQMode", gHQMode),
                 Vmad.Obj("CQM_Brynja", npc.FormKey), Vmad.Obj("CQM_PowerQuartermaster", power.FormKey),
                 Vmad.Obj("CQM_AbRepaired", abRepair), Vmad.Obj("CQM_AbEmberRepaired", abEmber),
-                Vmad.Obj("LocTypeInn", LocTypeInn),
+                Vmad.Obj("LocTypeInn", LocTypeInn), Vmad.Obj("LocTypePlayerHouse", LocTypePlayerHouse),
                 Vmad.Obj("Gold001", Gold001), Vmad.Obj("LeatherStrips", LeatherStrips), Vmad.Obj("IngotIron", IngotIron),
                 Vmad.Obj("Charcoal", Charcoal), Vmad.Obj("FireSalts", FireSalts),
                 Vmad.ObjList("JunkLists", junkLists), Vmad.IntList("TierValues", tierValues),
-                Vmad.ObjList("Stashes", stashes), Vmad.Obj("CQM_CampMarker", campMarker),
+                Vmad.ObjList("Stashes", stashes), Vmad.Obj("CQM_CampMarker", campMarker), Vmad.Obj("CQM_HQMarker", hqMarker),
                 Vmad.Alias("CQM_TravelAlias", qMain, AliasTravel), Vmad.Alias("CQM_CampAlias", qMain, AliasCamp),
+                Vmad.Alias("CQM_HQAlias", qHQ, AliasHQ), Vmad.Obj("CQM_HQQuest", qHQ),
                 Vmad.Obj("CQM_FollowerQuest", qFollow),
                 Vmad.AliasList("Followers", qFollow, Enumerable.Range(0, FollowerAliases).ToArray()),
                 Vmad.Obj("CQM_MsgIntro", msgIntro), Vmad.Obj("CQM_MsgNotInn", msgNotInn), Vmad.Obj("CQM_MsgHire", msgHire),
                 Vmad.Obj("CQM_MsgNoGold", msgNoGold), Vmad.Obj("CQM_MsgHiredTravel", msgTravel), Vmad.Obj("CQM_MsgHiredCamp", msgCamp),
+                Vmad.Obj("CQM_MsgHiredHQ", msgHiredHQ),
                 Vmad.Obj("CQM_MsgTooFar", msgTooFar), Vmad.Obj("CQM_MsgSellConfirm", msgSell), Vmad.Obj("CQM_MsgSellNone", msgSellNone),
                 Vmad.Obj("CQM_MsgFollowers", msgFollowers), Vmad.Obj("CQM_MsgNobody", msgNobody),
                 Vmad.ObjList("ServiceMenus", serviceMenus),
                 Vmad.Obj("CQM_MsgRepair", msgRepair), Vmad.Obj("CQM_MsgRepairMats", msgRepairMats), Vmad.Obj("CQM_MsgEmberMats", msgEmberMats),
                 Vmad.Obj("CQM_MsgRepairFull", msgRepairFull), Vmad.Obj("CQM_MsgStashFull", msgStashFull),
-                Vmad.Obj("CQM_MsgDismiss", msgDismiss), Vmad.Obj("CQM_MsgFallen", msgFallen)))
+                Vmad.Obj("CQM_MsgDismiss", msgDismiss), Vmad.Obj("CQM_MsgDismissHQ", msgDismissHQ),
+                Vmad.Obj("CQM_MsgHQ", msgHQ), Vmad.Obj("CQM_MsgHQNotHere", msgHQNotHere),
+                Vmad.Obj("CQM_MsgFallen", msgFallen)))
             .WithAliasScripts(qMain, AliasPlayer, Vmad.Script("CQM_PlayerAliasScript", Vmad.Obj("Quartermaster", qMain)));
     }
 

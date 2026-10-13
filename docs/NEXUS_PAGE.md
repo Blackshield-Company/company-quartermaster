@@ -1,17 +1,17 @@
 # Nexus Mods page: Company Quartermaster
 
-Early beta: v0.1.0 passes every automated build check but nobody has playtested it in game yet. The page says this at the top. The exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
+Early beta: v0.2.0 passes every automated build check but nobody has playtested it in game yet. The page says this at the top. The exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
 
 ## Page settings
 
 - **Game:** Skyrim Special Edition
 - **Mod name:** Company Quartermaster
-- **Version:** 0.1.0 (early beta)
+- **Version:** 0.2.0 (early beta)
 - **Category:** Gameplay
 - **Suggested tags:** Gameplay, Economy, Followers, Lore-Friendly, ESL, No SKSE, Scripted
 - **Requirements:** none. Ember Smithing is optional and is not a master.
 - **Permissions (suggested):** the source is on GitHub under MIT, so allow modification and conversions with credit, but not re-uploads of the archive itself.
-- **File to upload:** `CompanyQuartermaster-0.1.0.zip` (FOMOD) as the main file, named "Company Quartermaster".
+- **File to upload:** `CompanyQuartermaster-0.2.0.zip` (FOMOD) as the main file, named "Company Quartermaster".
 
 ## Description (paste into the BBCode editor)
 
@@ -19,12 +19,12 @@ Early beta: v0.1.0 passes every automated build check but nobody has playtested 
 [center][size=6][b]COMPANY QUARTERMASTER[/b][/size]
 [size=3][i]No hall. An inn, a ledger, and a woman who counts.[/i][/size]
 
-[size=3][color=#e0a030][b]EARLY BETA (v0.1.0)[/b]: this version passes every automated build check but hasn't been playtested in game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log.[/color][/size][/center]
+[size=3][color=#e0a030][b]EARLY BETA (v0.2.0)[/b]: this version passes every automated build check but hasn't been playtested in game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log. Saves from 0.1.0 keep working.[/color][/size][/center]
 
 [line]
 
 [size=4][b]Summary[/b][/size]
-Hire Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits your followers' gear, and keeps a stash for each of them. She travels with you or waits in camp. She is not a follower and does not take a follower slot.
+Hire Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits your followers' gear, and keeps a stash for each of them. She travels with you, waits in camp, or waits at a company HQ you set at an inn or a house you own. She is not a follower and does not take a follower slot.
 
 The Blackshield Company has no hall of its own, so the hire is at an inn. Base game only. No SKSE. ESL-flagged. Edits no vanilla records.
 
@@ -34,6 +34,7 @@ The Blackshield Company has no hall of its own, so the hire is at an inn. Base g
 [*][b]Sell all junk[/b]. Tankards, plates, goblets, silver candlesticks and the like, at a flat bulk rate (60% by default). You confirm the gold first. Quest items, gems and ingots are never touched.
 [*][b]Follower services[/b]. A field refit (+40 armor, +10% weapon damage for 3 days) or a personal stash. Eight stashes, and they keep their contents if you dismiss her.
 [*][b]Travel or camp[/b]. She follows, or she waits where you left her. Fast travel brings her along only while she is travelling with you.
+[*][b]Company HQ[/b]. Set it at an inn or a house you own. Send her there to wait, and hire her there again. If you leave that cell she is sent back on a load or a location change. Dismiss can send her to HQ instead of releasing her.
 [/list]
 
 If Ember Smithing is installed, the refit menu also offers an ember refit (+60 armor, +15% damage) for charcoal and fire salts. Without that mod the option is hidden. This mod does not require it.

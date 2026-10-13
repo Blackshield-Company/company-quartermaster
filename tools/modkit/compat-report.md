@@ -21,9 +21,9 @@
 | 13 | OathbreakersPrice.esp | yes | Skyrim.esm | 61 | 0 | FE00C800-FE00C83C |
 | 14 | ChampionsReforge.esp | yes | Skyrim.esm | 68 | 0 | FE00D800-FE00D843 |
 | 15 | BarrowIronPact.esp | yes | Skyrim.esm | 63 | 0 | FE00E800-FE00E83E |
-| 16 | CompanyQuartermaster.esp | yes | Skyrim.esm | 64 | 0 | FE00F800-FE00F83F |
+| 16 | CompanyQuartermaster.esp | yes | Skyrim.esm | 72 | 0 | FE00F800-FE00F847 |
 
-1458 new records; every simulated runtime FormID is unique.
+1466 new records; every simulated runtime FormID is unique.
 
 ## Overrides of existing records
 
@@ -48,9 +48,9 @@ None. No plugin in the set overrides a vanilla record or another plugin's record
 | OathbreakersPrice.esp | `OBP_` | 61 | 0 |
 | ChampionsReforge.esp | `CRF_` | 68 | 0 |
 | BarrowIronPact.esp | `BIP_` | 63 | 0 |
-| CompanyQuartermaster.esp | `CQM_` | 64 | 0 |
+| CompanyQuartermaster.esp | `CQM_` | 72 | 0 |
 
-1458 EditorIDs across the set; collisions: 0.
+1466 EditorIDs across the set; collisions: 0.
 
 ## Globals
 
@@ -71,9 +71,9 @@ None. No plugin in the set overrides a vanilla record or another plugin's record
 | OathbreakersPrice.esp | 6 |
 | ChampionsReforge.esp | 8 |
 | BarrowIronPact.esp | 6 |
-| CompanyQuartermaster.esp | 10 |
+| CompanyQuartermaster.esp | 12 |
 
-178 globals in total, no two with the same EditorID.
+180 globals in total, no two with the same EditorID.
 
 ## Papyrus scripts
 
@@ -157,7 +157,7 @@ None. No plugin in the set overrides a vanilla record or another plugin's record
 | ChampionsReforge.esp | CRF_TemperScript.psc:96 | ccffbsse001-imperialdragon.esl 000D6C | plugin not in set: returns None, guarded |
 | BarrowIronPact.esp | BIP_SeriesScript.psc:18 | GrayManeDebt.esp 000802 (GMD_State) | resolves: GlobalFloat GMD_State |
 | BarrowIronPact.esp | BIP_SeriesScript.psc:24 | Roadwarden.esp 00081A (RWD_EncounterCount) | resolves: GlobalFloat RWD_EncounterCount |
-| CompanyQuartermaster.esp | CQM_QuartermasterScript.psc:102 | EmberSmithing.esp 000803 (EMB_EmberForgedIronSword) | resolves: Weapon EMB_EmberForgedIronSword |
+| CompanyQuartermaster.esp | CQM_QuartermasterScript.psc:115 | EmberSmithing.esp 000803 (EMB_EmberForgedIronSword) | resolves: Weapon EMB_EmberForgedIronSword |
 
 12 soft reference(s) resolve inside the set; 12 point at plugins not in the set (skipped at runtime).
 

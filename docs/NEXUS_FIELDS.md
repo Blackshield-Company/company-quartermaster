@@ -4,19 +4,19 @@ Game: Skyrim Special Edition
 
 Mod name: Company Quartermaster
 
-Version: 0.1.0 (early beta)
+Version: 0.2.0 (early beta)
 
 Category: Gameplay
 
-Short summary (216 chars):
-Hire Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits follower gear and keeps a stash for each of them. Not a follower, so she takes no follower slot. Base game, ESL, no SKSE. Early beta.
+Short summary (186 chars):
+Hire Brynja Tally-Hand at an inn. Supplies, bulk clutter, follower refits and stashes. Set a company HQ at an inn or a house you own. Not a follower. Base game, ESL, no SKSE. Early beta.
 
 Main file:
-- File: CompanyQuartermaster-0.1.0.zip (FOMOD installer)
+- File: CompanyQuartermaster-0.2.0.zip (FOMOD installer)
 - File name: Company Quartermaster
-- File version: 0.1.0
+- File version: 0.2.0
 - File category: Main Files
-- File description: Early beta. Hire a quartermaster at an inn for supplies, bulk clutter, follower refits and stashes. She is not a follower. FOMOD installer with CompanyQuartermaster.esp (ESL-flagged), compiled scripts, SEQ file, and optional Papyrus sources. Requires only Skyrim Special Edition / Anniversary Edition (1.5.97 or 1.6.x).
+- File description: Early beta. Hire a quartermaster at an inn for supplies, bulk clutter, follower refits and stashes. Set a company HQ at an inn or a house you own. She is not a follower. Saves from 0.1.0 keep working. FOMOD installer with CompanyQuartermaster.esp (ESL-flagged), compiled scripts, SEQ file, and optional Papyrus sources. Requires only Skyrim Special Edition / Anniversary Edition (1.5.97 or 1.6.x).
 
 Requirements:
 - Nexus mod requirements: none (Ember Smithing is optional, detected at runtime, not a master)

@@ -18,11 +18,13 @@ internal static class Vanilla
     public static readonly FormKey XMarker = K(0x00003B);
 
     public static readonly FormKey LocTypeInn = K(0x01CB87);
+    public static readonly FormKey LocTypePlayerHouse = K(0x0FC1A3);
     public static readonly FormKey CurrentFollowerFaction = K(0x05C84E);
     public static readonly FormKey PotentialFollowerFaction = K(0x05C84D);
 
     public static readonly FormKey DefaultFollowPlayer = K(0x04B037);
     public static readonly FormKey DefaultSandboxCurrentLocation256 = K(0x0956B8);
+    public static readonly FormKey DefaultSandboxCurrentLocation1024 = K(0x0BFB6B);
 
     public static readonly FormKey LCharBanditMeleeNordF = K(0x01A321);
     public static readonly FormKey NordRace = K(0x013746);

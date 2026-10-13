@@ -37,7 +37,7 @@ internal static class Program
         mod.ModHeader.Flags |= SkyrimModHeader.HeaderFlag.Small; // ESL-flagged ESP
         mod.ModHeader.Stats.Version = 1.7f;
         mod.ModHeader.Author = "synthalorian";
-        mod.ModHeader.Description = "Company Quartermaster: hire Brynja Tally-Hand at an inn for supplies, bulk clutter, and follower refits. She is not a follower.";
+        mod.ModHeader.Description = "Company Quartermaster: hire Brynja Tally-Hand at an inn for supplies, bulk clutter, and follower refits. She can wait at a company HQ. She is not a follower.";
 
         var outPath = Path.Combine(outDir, PluginName);
         mod.BeginWrite.ToPath(outPath).WithNoLoadOrder().Write();

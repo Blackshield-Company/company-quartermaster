@@ -2,7 +2,7 @@
 
 Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits your followers' gear, and keeps a stash for each of them. She is not a follower.
 
-**Status: v0.1.0, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md).
+**Status: v0.2.0, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md). Saves from 0.1.0 keep working: existing FormIDs are unchanged, and this version only adds records.
 
 - Game: Skyrim Special Edition / Anniversary Edition 1.6.x (1.5.97 also works). Runs on Windows, and on Linux through Proton.
 - Requirements: just the base game. No SKSE, SkyUI, DLC or Creation Club content.
@@ -16,15 +16,16 @@ Use the FOMOD. It installs `CompanyQuartermaster.esp`, the scripts, and `SEQ/Com
 ## How it works
 
 1. At the start you learn the lesser power **Company Quartermaster**.
-2. **Not hired:** the power works only inside an inn (`LocTypeInn` on your current location). The Blackshield Company has no physical base in [Blackshield Company](https://github.com/Blackshield-Company/blackshield-company) (that mod is a ledger and a letter, not a hall), so hiring is at inns only. Hire her for `CQM_HireCost` gold (500). She appears beside you and starts travelling with you. She is placed with `PlaceActorAtMe`. She is not in `PotentialFollowerFaction` or `CurrentFollowerFaction`, she is not a teammate, and she does not take a follower slot.
-3. **Hired:** Trade supplies / Sell all junk / Follower services / Travel with the company or Make camp here / Dismiss / Cancel.
+2. **Not hired:** the power works only inside an inn (`LocTypeInn` on your current location), or at a company HQ you have already set. The Blackshield Company has no physical base in [Blackshield Company](https://github.com/Blackshield-Company/blackshield-company) (that mod is a ledger and a letter, not a hall), so the first hire is at an inn. Hire her for `CQM_HireCost` gold (500). She appears beside you and starts travelling with you. She is placed with `PlaceActorAtMe`. She is not in `PotentialFollowerFaction` or `CurrentFollowerFaction`, she is not a teammate, and she does not take a follower slot.
+3. **Hired:** Trade supplies / Sell all junk / Follower services / Travel with the company or Make camp here / Company HQ / Dismiss / Cancel. While she is at HQ the travel button reads Travel with the company.
 4. **Trade supplies** opens her barter menu. She must be within `CQM_ServiceRadius` (1500). Otherwise: "Brynja is too far away."
 5. **Sell all junk** pays a flat bulk rate for clutter on her lists. Confirm the gold total before anything is removed.
 6. **Follower services** lists up to five nearest living teammates in the loaded area. Repair gear, or open that follower's stash.
-7. **Travel / camp** toggles. Travel: she follows (`DefaultFollowPlayer`). Camp: she sandboxes where you left her (`DefaultSandboxCurrentLocation256`). In travel mode, a location change or a load moves her next to you if she is in another cell or farther than 3000 units. That covers fast travel. Camp mode leaves her where she is.
-8. **Dismiss** asks first, then disables and deletes her. Stashes keep their items. Hire her again at an inn and the same stashes are still there.
+7. **Travel / camp / HQ.** Travel: she follows (`DefaultFollowPlayer`). Camp: she sandboxes where you left her (`DefaultSandboxCurrentLocation256`). HQ: she sandboxes at the headquarters (`DefaultSandboxCurrentLocation1024` on a separate quest, so old saves do not gain an alias on the controller). In travel mode, a location change or a load moves her next to you if she is in another cell or farther than 3000 units. That covers fast travel. Camp mode leaves her where she is. HQ mode, on those same events, moves her to the HQ marker if she is not in its cell. No update loop.
+8. **Company HQ** can be set only at an inn or a house you own (`LocTypeInn` or `LocTypePlayerHouse`). The marker moves to you, and that location is remembered. Send her there and she stays hired; trade and the other services still need her within `CQM_ServiceRadius`. Clear HQ drops the place. If she was waiting there, she camps where she stands. Travel with the company from HQ clears that alias and she follows again. Make camp here is unchanged.
+9. **Dismiss** asks first. If an HQ is set, the choice is send her there (she stays hired) or release her. Release, and dismiss when no HQ is set, disables and deletes her. Stashes keep their items. Hire her again at an inn, or at the HQ location if one is still set.
 
-She is protected (only you can kill her). If she dies, the next use of the power clears her so you can hire her again at an inn.
+She is protected (only you can kill her). If she dies, the next use of the power clears her so you can hire her again at an inn, or at company HQ if one is set.
 
 ### Supplies
 
@@ -63,7 +64,7 @@ set CQM_RepairGold to 50          ; gold for a normal refit (ember repair takes 
 set CQM_CatchupDistance to 3000   ; travel mode: move her to you past this distance
 ```
 
-State, also console-adjustable, but the script overwrites these: `CQM_PowerGranted`, `CQM_Hired`, `CQM_Traveling`, `CQM_EmberPresent` (1 when Ember Smithing is loaded).
+State, also console-adjustable, but the script overwrites these: `CQM_PowerGranted`, `CQM_Hired`, `CQM_Traveling`, `CQM_HQMode` (1 while she waits at HQ), `CQM_HQSet` (1 once a company HQ is set), `CQM_EmberPresent` (1 when Ember Smithing is loaded).
 
 ## Compatibility
 
@@ -77,7 +78,7 @@ No shared records with the other fifteen mods. She does not use the vanilla foll
 - Catch-up runs on a location change and on load, not while you walk. The follow package keeps her close; fast travel is what the catch-up is for.
 - Sell-all only covers the lists above. Other clutter stays in your pack.
 - A reused stash still holds whatever the last owner stored.
-- Camp is a short sandbox, not a tent. The holding cell is not a place you visit.
+- Camp is a short sandbox, not a tent. Company HQ is that inn or house, not a new hall. The holding cell is not a place you visit.
 - Trade prices follow your speechcraft. Sell-all does not.
 
 ## Building

@@ -5,15 +5,15 @@ internal static class Texts
     public const string Intro =
         "COMPANY QUARTERMASTER\n\n" +
         "You can hire Brynja Tally-Hand. She keeps stores for the company: supplies, a bulk price on clutter, and a stash and a field refit for each follower.\n\n" +
-        "The Blackshield Company has no hall of its own, so she takes hire at an inn. Use the lesser power Company Quartermaster. She is not a follower and does not take a follower slot.";
+        "The Blackshield Company has no hall of its own, so she takes hire at an inn. Once hired, you can set a company HQ at an inn or a house you own. Use the lesser power Company Quartermaster. She is not a follower and does not take a follower slot.";
 
     public const string NotInn =
-        "The company has no hall. Hire Brynja Tally-Hand at an inn.";
+        "The company has no hall. Hire Brynja Tally-Hand at an inn, or at company HQ if you have set one.";
 
     public const string Hire =
         "COMPANY QUARTERMASTER\n\n" +
         "Brynja Tally-Hand will keep the company's stores for %.0f gold.\n\n" +
-        "She sells supplies, buys clutter in bulk, and looks after your followers' gear and stashes. She can travel with you or wait in camp. She does not take a follower slot.";
+        "She sells supplies, buys clutter in bulk, and looks after your followers' gear and stashes. She can travel with you, wait in camp, or wait at a company HQ you set. She does not take a follower slot.";
 
     public const string NoGold = "You need %.0f gold to hire her.";
 
@@ -22,6 +22,9 @@ internal static class Texts
 
     public const string HiredCamp =
         "COMPANY QUARTERMASTER\n\nBrynja Tally-Hand is camped. She will wait where you left her.";
+
+    public const string HiredHQ =
+        "COMPANY QUARTERMASTER\n\nBrynja Tally-Hand is at company HQ. She will wait there.";
 
     public const string TooFar = "Brynja is too far away.";
 
@@ -48,7 +51,16 @@ internal static class Texts
     public const string Dismiss =
         "Send Brynja away? Her stashes keep what you stored. Hire her again at an inn.";
 
-    public const string Fallen = "Brynja has fallen. Hire her again at an inn when you can.";
+    public const string DismissHQ =
+        "Send Brynja to company HQ, or release her from service? Her stashes keep what you stored. Hire her again at an inn, or at HQ.";
+
+    public const string HQ =
+        "COMPANY HQ\n\nSet it at an inn or a house you own. She can wait there. You can hire her there again.";
+
+    public const string HQNotHere =
+        "Company HQ can only be set at an inn or a house you own.";
+
+    public const string Fallen = "Brynja has fallen. Hire her again at an inn, or at company HQ if you have set one.";
 
     public const string FollowerLog =
         "Companions: <Alias=Follower1> <Alias=Follower2> <Alias=Follower3> <Alias=Follower4> <Alias=Follower5>";
