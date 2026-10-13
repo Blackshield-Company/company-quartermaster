@@ -26,7 +26,13 @@ internal static class Vanilla
     public static readonly FormKey DefaultSandboxCurrentLocation256 = K(0x0956B8);
     public static readonly FormKey DefaultSandboxCurrentLocation1024 = K(0x0BFB6B);
 
-    public static readonly FormKey LCharBanditMeleeNordF = K(0x01A321);
+    public static readonly FormKey FemaleHeadNord = K(0x051623);
+    public static readonly FormKey HairFemaleNord02 = K(0x051193);
+    public static readonly FormKey HairLineFemaleNord02 = K(0x0510F6);
+    public static readonly FormKey FemaleEyesHumanBrown = K(0x072917);
+    public static readonly FormKey FemaleBrowsHuman03 = K(0x0E4D91);
+    public static readonly FormKey ArmorIronandHideMixed = K(0x0ABDA1);
+    public static readonly FormKey IronSword = K(0x012EB7);
     public static readonly FormKey NordRace = K(0x013746);
     public static readonly FormKey ClassWarrior1H = K(0x013176);
     public static readonly FormKey CsHumanMelee = K(0x03BE1B);
