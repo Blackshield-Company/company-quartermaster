@@ -4,7 +4,7 @@
 
 Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits your followers' gear, and keeps a stash for each of them. She is not a follower.
 
-**Status: v0.2.3, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md). Saves from 0.1.0, 0.2.0, 0.2.1 and 0.2.2 keep working: existing FormIDs are unchanged, and this version only adds records.
+**Status: v0.2.4, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md). Saves from 0.1.0, 0.2.0, 0.2.1, 0.2.2 and 0.2.3 keep working: existing FormIDs are unchanged, and this version only adds records.
 
 - Game: Skyrim Special Edition / Anniversary Edition 1.6.x (1.5.97 also works). Runs on Windows, and on Linux through Proton.
 - Requirements: just the base game. No SKSE, SkyUI, DLC or Creation Club content.
@@ -70,7 +70,7 @@ State, also console-adjustable, but the script overwrites these: `CQM_PowerGrant
 
 ## Changing Brynja's look
 
-In SSEEdit open `CompanyQuartermaster.esp`, find NPC `CQM_Brynja` (xx000820), change Head Parts, Hair Color, race or outfit (or save it into your own override plugin), then hire her again. For a custom face, export FaceGen in the Creation Kit (Ctrl+F4) or you may get a dark face.
+Brynja borrows Uthgerd the Unbroken's face through a Use Traits template, so the game's own FaceGen is used. In SSEEdit open `CompanyQuartermaster.esp`, find NPC `CQM_Brynja` (xx000820) and point Template at another vanilla female NPC (or save that into your own override plugin), then hire her again. A custom face needs FaceGen exported in the Creation Kit (Ctrl+F4) or it renders dark grey.
 
 ## Compatibility
 

@@ -14,9 +14,6 @@ internal sealed class Builder
     private readonly FormIdRegistry _ids;
     private static readonly SkyrimRelease R = SkyrimRelease.SkyrimSE;
     private const byte VanillaQuestFormVersion = 65;
-    // Brynja's skin: QNAM body tone and the matching face skin-tone tint layer must stay equal.
-    private static readonly System.Drawing.Color BrynjaSkinTone = System.Drawing.Color.FromArgb(0, 0xE3, 0xC8, 0xB4);
-    private const ushort BrynjaSkinToneTintIndex = 24; // NordRace female SkinTone mask
     public const int AliasPlayer = 0;
     public const int AliasTravel = 1;
     public const int AliasCamp = 2;
@@ -122,7 +119,14 @@ internal sealed class Builder
                 CalcMaxLevel = 0,
                 SpeedMultiplier = 100,
                 DispositionBase = 35,
+                // Use Traits: face, head parts, hair, tints, skin tone, race, gender and voice come
+                // from the vanilla template, and so does its FaceGen in Skyrim - Meshes/Textures.
+                TemplateFlags = NpcConfiguration.TemplateFlag.Traits,
             },
+            // A custom face needs CK-exported FaceGen (facegeom .nif + facetint .dds); without it the
+            // face renders dark grey. Uthgerd the Unbroken is a unique female Nord whose FaceGen
+            // ships with the game, so Brynja borrows her look instead.
+            Template = new FormLinkNullable<INpcSpawnGetter>(UthgerdNpc),
             AIData = new AIData
             {
                 Aggression = Aggression.Unaggressive, Confidence = Confidence.Brave, EnergyLevel = 50,
@@ -131,25 +135,7 @@ internal sealed class Builder
             PlayerSkills = new PlayerSkills(),
             Height = 1,
             Weight = 50,
-            // QNAM: the body skin tone. The engine tints the body skin from this colour, not from
-            // FaceGen; without it the body renders black/dark brown while the face looks fine.
-            TextureLighting = BrynjaSkinTone,
         };
-        // Skin-tone tint layer (NordRace female "SkinTone" mask, TINP 6). No FaceGen ships with the
-        // mod, so the engine builds her face tint at runtime from these layers; this keeps the face
-        // the same colour as the QNAM body tone instead of the race default.
-        npc.TintLayers.Add(new TintLayer
-        {
-            Index = BrynjaSkinToneTintIndex,
-            Color = BrynjaSkinTone,
-            InterpolationValue = 1.0f,
-            Preset = -1,
-        });
-        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleHeadNord));
-        npc.HeadParts.Add(L<IHeadPartGetter>(HairFemaleNord02));
-        npc.HeadParts.Add(L<IHeadPartGetter>(HairLineFemaleNord02));
-        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleEyesHumanBrown));
-        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleBrowsHuman03));
         npc.DefaultOutfit = L<IOutfitGetter>(ArmorIronandHideMixed).AsNullable();
         npc.Items = new ExtendedList<ContainerEntry>
         {

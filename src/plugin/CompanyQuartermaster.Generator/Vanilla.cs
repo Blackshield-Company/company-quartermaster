@@ -33,6 +33,7 @@ internal static class Vanilla
     public static readonly FormKey FemaleBrowsHuman03 = K(0x0E4D91);
     public static readonly FormKey ArmorIronandHideMixed = K(0x0ABDA1);
     public static readonly FormKey IronSword = K(0x012EB7);
+    public static readonly FormKey UthgerdNpc = K(0x0918E2); // Skyrim+Npc.Uthgerd
     public static readonly FormKey NordRace = K(0x013746);
     public static readonly FormKey ClassWarrior1H = K(0x013176);
     public static readonly FormKey CsHumanMelee = K(0x03BE1B);

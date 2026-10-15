@@ -40,7 +40,7 @@ The Blackshield Company has no hall of its own, so the hire is at an inn. Base g
 If Ember Smithing is installed, the refit menu also offers an ember refit (+60 armor, +15% damage) for charcoal and fire salts. Without that mod the option is hidden. This mod does not require it.
 
 [size=4][b]Changing her look[/b][/size]
-In SSEEdit open CompanyQuartermaster.esp, find NPC CQM_Brynja (xx000820), change Head Parts, Hair Color, race or outfit (or save it into your own override plugin), then hire her again. For a custom face, export FaceGen in the Creation Kit (Ctrl+F4) or you may get a dark face.
+Brynja borrows Uthgerd the Unbroken's face through a Use Traits template, so the game's own FaceGen is used. In SSEEdit open CompanyQuartermaster.esp, find NPC CQM_Brynja (xx000820) and point Template at another vanilla female NPC (or save that into your own override plugin), then hire her again. A custom face needs FaceGen exported in the Creation Kit (Ctrl+F4) or it renders dark grey.
 
 [size=4][b]Requirements[/b][/size]
 [list]

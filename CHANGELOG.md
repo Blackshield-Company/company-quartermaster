@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.4] - 2026-10-15
+
+### Fixed
+- Brynja's face rendered dark grey while her body looked normal. A custom face needs FaceGen files (a head mesh and a face tint texture) exported from the Creation Kit, and the mod shipped none; the 0.2.3 tint layer could not replace them. Brynja now uses Uthgerd the Unbroken as a template with the Traits flag, so she takes a vanilla Nord face, hair, skin tone and voice, and the game's own FaceGen for that face. Her name, class, outfit, sword, AI and scripts are unchanged. No FormIDs changed. A translated plugin re-saved from an earlier version overrides Brynja's record with the old data and needs to be rebuilt from 0.2.4.
+
 ## [0.2.3] - 2026-10-15
 
 ### Fixed

@@ -1,4 +1,4 @@
-# Design notes (v0.2.3, early beta)
+# Design notes (v0.2.4, early beta)
 
 ## Records (72, FormIDs 0x800-0x847, ESL-flagged, Skyrim.esm only, no overrides)
 
@@ -9,7 +9,7 @@
 | `CQM_QuartermasterQuest` | QUST (Start Game Enabled, Run Once) | Controller (`CQM_QuartermasterScript`). Alias 0 = player (`CQM_PlayerAliasScript`: grant on init, catch-up on `OnLocationChange` and `OnPlayerLoadGame`). Alias 1 = `CQM_TravelAlias` (optional, protected, package `DefaultFollowPlayer`). Alias 2 = `CQM_CampAlias` (optional, protected, package `DefaultSandboxCurrentLocation256`). In `SEQ/CompanyQuartermaster.seq`. |
 | `CQM_FollowerQuest` | QUST | Five optional reference aliases, nearest living player teammates in the loaded area (same shape as `WBN_RallyQuest`). Restarted when the follower menu opens, stopped when it closes. Stage 10 log carries the `<Alias=Follower1>`…`<Alias=Follower5>` tags the menus use. Not start-game-enabled. |
 | `CQM_HQQuest` | QUST | Not start-game-enabled, not run-once, priority 30, QuestFormVersion 65. Alias 0 = `CQM_HQAlias` (optional, protected, package `DefaultSandboxCurrentLocation1024`). The controller starts it with `Start()` when the alias is needed. Not in the SEQ file. |
-| `CQM_Brynja` | NPC_ | Template `LCharBanditMeleeNordF` (traits, stats, model, inventory, attack data, keywords). Own name, vendor faction only. Unique, protected. Not in `PotentialFollowerFaction` or `CurrentFollowerFaction`. No packages of her own. Does not exist until `PlaceActorAtMe`. |
+| `CQM_Brynja` | NPC_ | Template `Uthgerd` (Skyrim.esm 0918E2), Traits flag only: face, head parts, hair, tints, skin tone, voice and the vanilla FaceGen come from her. Own name, class, stats, outfit, iron sword, vendor faction. Unique, protected. Not in `PotentialFollowerFaction` or `CurrentFollowerFaction`. No packages of her own. Does not exist until `PlaceActorAtMe`. |
 | `CQM_VendorFaction` | FACT | Vendor flag, hours 0-24, radius 50000, buy/sell list `CQM_BuyList` only, merchant container `CQM_MerchantChestRef`. |
 | `CQM_StorageCell` | CELL | New interior. Not a vanilla cell. Holds the merchant chest, eight stash chests, a camp marker and an HQ marker, all persistent. |
 | `CQM_MerchantChest` / `CQM_MerchantChestRef` | CONT / REFR | Respawning chest. Stock: bread, cheese, venison, cure disease, minor and standard health and stamina potions, iron and steel arrows, leather strips, iron ingots, charcoal, leather. |
