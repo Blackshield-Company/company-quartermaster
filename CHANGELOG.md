@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.3] - 2026-10-15
+
+### Fixed
+- Brynja's body could still render darker than her face. The mod ships no FaceGen, so the engine builds her face tint at runtime, and her NPC record had no tint layers to build it from. She now has a NordRace skin-tone tint layer with the same colour as her body skin tone (QNAM). No FormIDs changed. If you use a translated plugin re-saved from 0.2.1 or 0.2.2, it overrides Brynja's record with the old data; it needs to be rebuilt from 0.2.3.
+
 ## [0.2.2] - 2026-10-15
 
 ### Fixed

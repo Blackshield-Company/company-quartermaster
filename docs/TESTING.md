@@ -1,4 +1,4 @@
-# Testing checklist (v0.2.2, early beta)
+# Testing checklist (v0.2.3, early beta)
 
 Automated (every `./build.sh`):
 

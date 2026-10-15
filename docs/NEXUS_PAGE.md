@@ -1,17 +1,17 @@
 # Nexus Mods page: Company Quartermaster
 
-Early beta: v0.2.2 passes every automated build check but nobody has playtested it in game yet. The page says this at the top. The exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
+Early beta: v0.2.3 passes every automated build check but nobody has playtested it in game yet. The page says this at the top. The exact upload-form values are in [NEXUS_FIELDS.md](NEXUS_FIELDS.md).
 
 ## Page settings
 
 - **Game:** Skyrim Special Edition
 - **Mod name:** Company Quartermaster
-- **Version:** 0.2.2 (early beta)
+- **Version:** 0.2.3 (early beta)
 - **Category:** Gameplay
 - **Suggested tags:** Gameplay, Economy, Followers, Lore-Friendly, ESL, No SKSE, Scripted
 - **Requirements:** none. Ember Smithing is optional and is not a master.
 - **Permissions (suggested):** the source is on GitHub under MIT, so allow modification and conversions with credit, but not re-uploads of the archive itself.
-- **File to upload:** `CompanyQuartermaster-0.2.2.zip` (FOMOD) as the main file, named "Company Quartermaster".
+- **File to upload:** `CompanyQuartermaster-0.2.3.zip` (FOMOD) as the main file, named "Company Quartermaster".
 
 ## Description (paste into the BBCode editor)
 
@@ -19,7 +19,7 @@ Early beta: v0.2.2 passes every automated build check but nobody has playtested 
 [center][size=6][b]COMPANY QUARTERMASTER[/b][/size]
 [size=3][i]No hall. An inn, a ledger, and a woman who counts.[/i][/size]
 
-[size=3][color=#e0a030][b]EARLY BETA (v0.2.2)[/b]: this version passes every automated build check but hasn't been playtested in game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log. Saves from 0.1.0, 0.2.0 and 0.2.1 keep working.[/color][/size][/center]
+[size=3][color=#e0a030][b]EARLY BETA (v0.2.3)[/b]: this version passes every automated build check but hasn't been playtested in game yet. Please report bugs in the Bugs tab or on GitHub, ideally with your Papyrus log. Saves from 0.1.0, 0.2.0, 0.2.1 and 0.2.2 keep working.[/color][/size][/center]
 
 [line]
 

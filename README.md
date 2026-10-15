@@ -4,7 +4,7 @@
 
 Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits your followers' gear, and keeps a stash for each of them. She is not a follower.
 
-**Status: v0.2.2, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md). Saves from 0.1.0, 0.2.0 and 0.2.1 keep working: existing FormIDs are unchanged, and this version only adds records.
+**Status: v0.2.3, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md). Saves from 0.1.0, 0.2.0, 0.2.1 and 0.2.2 keep working: existing FormIDs are unchanged, and this version only adds records.
 
 - Game: Skyrim Special Edition / Anniversary Edition 1.6.x (1.5.97 also works). Runs on Windows, and on Linux through Proton.
 - Requirements: just the base game. No SKSE, SkyUI, DLC or Creation Club content.

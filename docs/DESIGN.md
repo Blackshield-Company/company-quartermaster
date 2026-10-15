@@ -1,4 +1,4 @@
-# Design notes (v0.2.2, early beta)
+# Design notes (v0.2.3, early beta)
 
 ## Records (72, FormIDs 0x800-0x847, ESL-flagged, Skyrim.esm only, no overrides)
 
