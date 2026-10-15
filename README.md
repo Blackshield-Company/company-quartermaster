@@ -1,3 +1,5 @@
+![company-quartermaster](.github/preview.png)
+
 # Company Quartermaster
 
 Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits your followers' gear, and keeps a stash for each of them. She is not a follower.
