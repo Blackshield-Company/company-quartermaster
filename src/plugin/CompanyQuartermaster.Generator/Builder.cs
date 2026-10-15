@@ -119,7 +119,14 @@ internal sealed class Builder
                 CalcMaxLevel = 0,
                 SpeedMultiplier = 100,
                 DispositionBase = 35,
+                // Use Traits: face, head parts, hair, tints, skin tone, race, gender and voice come
+                // from the vanilla template, and so does its FaceGen in Skyrim - Meshes/Textures.
+                TemplateFlags = NpcConfiguration.TemplateFlag.Traits,
             },
+            // A custom face needs CK-exported FaceGen (facegeom .nif + facetint .dds); without it the
+            // face renders dark grey. Uthgerd the Unbroken is a unique female Nord whose FaceGen
+            // ships with the game, so Brynja borrows her look instead.
+            Template = new FormLinkNullable<INpcSpawnGetter>(UthgerdNpc),
             AIData = new AIData
             {
                 Aggression = Aggression.Unaggressive, Confidence = Confidence.Brave, EnergyLevel = 50,
@@ -128,15 +135,7 @@ internal sealed class Builder
             PlayerSkills = new PlayerSkills(),
             Height = 1,
             Weight = 50,
-            // QNAM: the body skin tone. The engine tints the body skin from this colour, not from
-            // FaceGen; without it the body renders black/dark brown while the face looks fine.
-            TextureLighting = System.Drawing.Color.FromArgb(0, 0xE3, 0xC8, 0xB4),
         };
-        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleHeadNord));
-        npc.HeadParts.Add(L<IHeadPartGetter>(HairFemaleNord02));
-        npc.HeadParts.Add(L<IHeadPartGetter>(HairLineFemaleNord02));
-        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleEyesHumanBrown));
-        npc.HeadParts.Add(L<IHeadPartGetter>(FemaleBrowsHuman03));
         npc.DefaultOutfit = L<IOutfitGetter>(ArmorIronandHideMixed).AsNullable();
         npc.Items = new ExtendedList<ContainerEntry>
         {
