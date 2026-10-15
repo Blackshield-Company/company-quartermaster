@@ -38,6 +38,7 @@ echo "== Plugin"
 dotnet run --project src/plugin/CompanyQuartermaster.Generator -c Release -- \
   --out "$BUILD/plugin" --ids src/plugin/formids.json --papyrus src/papyrus
 python3 "$KIT/esp_check.py" "$BUILD/plugin/$NAME.esp"
+python3 tools/check_npc_appearance.py "$BUILD/plugin/$NAME.esp"
 # plugin + SEQ/
 cp -r "$BUILD/plugin/." "$STAGE/00 Core/"
 
