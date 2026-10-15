@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.2] - 2026-10-15
+
+### Fixed
+- Brynja's arms, midriff and legs rendered black or dark brown while her face looked normal. Since 0.2.1 she is no longer templated on a bandit, and her NPC record had no body skin tone (QNAM, "Texture Lighting"), so the engine tinted her body with black. She now has a pale Nord skin tone that matches her face. No FormIDs changed. Saves from 0.2.1 and earlier keep working, and the fix applies the next time her actor loads.
+
 ## [0.2.1] - 2026-10-13
 
 ### Fixed

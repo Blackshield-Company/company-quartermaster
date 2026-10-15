@@ -128,6 +128,9 @@ internal sealed class Builder
             PlayerSkills = new PlayerSkills(),
             Height = 1,
             Weight = 50,
+            // QNAM: the body skin tone. The engine tints the body skin from this colour, not from
+            // FaceGen; without it the body renders black/dark brown while the face looks fine.
+            TextureLighting = System.Drawing.Color.FromArgb(0, 0xE3, 0xC8, 0xB4),
         };
         npc.HeadParts.Add(L<IHeadPartGetter>(FemaleHeadNord));
         npc.HeadParts.Add(L<IHeadPartGetter>(HairFemaleNord02));
