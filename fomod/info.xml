@@ -3,7 +3,7 @@
   <Name>Company Quartermaster</Name>
   <Author>synthalorian</Author>
   <Version>@VERSION@</Version>
-  <Website>https://github.com/Blackshield-Company/company-quartermaster</Website>
+  <Website>https://github.com/synthalorian/company-quartermaster</Website>
   <Description>Hire Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, and keeps a stash and a field refit for each follower. She is not a follower. Base game only, no SKSE. Early beta.</Description>
   <Groups>
     <element>Gameplay</element>

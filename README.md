@@ -9,7 +9,7 @@ Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-
 - Game: Skyrim Special Edition / Anniversary Edition 1.6.x (1.5.97 also works). Runs on Windows, and on Linux through Proton.
 - Requirements: just the base game. No SKSE, SkyUI, DLC or Creation Club content.
 - Plugin: `CompanyQuartermaster.esp`, ESL-flagged, with Skyrim.esm as its only master. **It edits no vanilla records.** The only cell it adds is its own holding cell for chests. Brynja does not exist until you hire her.
-- Works with the rest of the series ([Blackshield Company](https://github.com/Blackshield-Company/blackshield-company), [Bounties of Oblivion](https://github.com/Blackshield-Company/bounties-of-oblivion), [Contract Hunter](https://github.com/Blackshield-Company/contract-hunter), [Steel Oath](https://github.com/Blackshield-Company/steel-oath), [Ember Smithing](https://github.com/Blackshield-Company/ember-smithing), [The Gray-Mane Debt](https://github.com/Blackshield-Company/the-gray-mane-debt), [Blackshield Codex](https://github.com/Blackshield-Company/blackshield-codex), [War Banners](https://github.com/Blackshield-Company/war-banners), [Roadwarden](https://github.com/Blackshield-Company/roadwarden), [Sellsword Roster](https://github.com/Blackshield-Company/sellsword-roster), [The Turncoat Contract](https://github.com/Blackshield-Company/the-turncoat-contract), [The Ledger of Ash](https://github.com/Blackshield-Company/the-ledger-of-ash), [Oathbreaker's Price](https://github.com/Blackshield-Company/oathbreakers-price), [Champion's Reforge](https://github.com/Blackshield-Company/champions-reforge), [Barrow-Iron Pact](https://github.com/Blackshield-Company/barrow-iron-pact)). It has its own prefix (`CQM_`), records, globals and files, and it is checked by loading all sixteen plugins together (see [tools/modkit](tools/modkit/README.md)).
+- Works with the rest of the series ([Blackshield Company](https://github.com/synthalorian/blackshield-company), [Bounties of Oblivion](https://github.com/synthalorian/bounties-of-oblivion), [Contract Hunter](https://github.com/synthalorian/contract-hunter), [Steel Oath](https://github.com/synthalorian/steel-oath), [Ember Smithing](https://github.com/synthalorian/ember-smithing), [The Gray-Mane Debt](https://github.com/synthalorian/the-gray-mane-debt), [Blackshield Codex](https://github.com/synthalorian/blackshield-codex), [War Banners](https://github.com/synthalorian/war-banners), [Roadwarden](https://github.com/synthalorian/roadwarden), [Sellsword Roster](https://github.com/synthalorian/sellsword-roster), [The Turncoat Contract](https://github.com/synthalorian/the-turncoat-contract), [The Ledger of Ash](https://github.com/synthalorian/the-ledger-of-ash), [Oathbreaker's Price](https://github.com/synthalorian/oathbreakers-price), [Champion's Reforge](https://github.com/synthalorian/champions-reforge), [Barrow-Iron Pact](https://github.com/synthalorian/barrow-iron-pact)). It has its own prefix (`CQM_`), records, globals and files, and it is checked by loading all sixteen plugins together (see [tools/modkit](tools/modkit/README.md)).
 
 ## Install
 
@@ -18,7 +18,7 @@ Use the FOMOD. It installs `CompanyQuartermaster.esp`, the scripts, and `SEQ/Com
 ## How it works
 
 1. At the start you learn the lesser power **Company Quartermaster**.
-2. **Not hired:** the power works only inside an inn (`LocTypeInn` on your current location), or at a company HQ you have already set. The Blackshield Company has no physical base in [Blackshield Company](https://github.com/Blackshield-Company/blackshield-company) (that mod is a ledger and a letter, not a hall), so the first hire is at an inn. Hire her for `CQM_HireCost` gold (500). She appears beside you and starts travelling with you. She is placed with `PlaceActorAtMe`. She is not in `PotentialFollowerFaction` or `CurrentFollowerFaction`, she is not a teammate, and she does not take a follower slot.
+2. **Not hired:** the power works only inside an inn (`LocTypeInn` on your current location), or at a company HQ you have already set. The Blackshield Company has no physical base in [Blackshield Company](https://github.com/synthalorian/blackshield-company) (that mod is a ledger and a letter, not a hall), so the first hire is at an inn. Hire her for `CQM_HireCost` gold (500). She appears beside you and starts travelling with you. She is placed with `PlaceActorAtMe`. She is not in `PotentialFollowerFaction` or `CurrentFollowerFaction`, she is not a teammate, and she does not take a follower slot.
 3. **Hired:** Trade supplies / Sell all junk / Follower services / Travel with the company or Make camp here / Company HQ / Dismiss / Cancel. While she is at HQ the travel button reads Travel with the company.
 4. **Trade supplies** opens her barter menu. She must be within `CQM_ServiceRadius` (1500). Otherwise: "Brynja is too far away."
 5. **Sell all junk** pays a flat bulk rate for clutter on her lists. Confirm the gold total before anything is removed.
@@ -51,7 +51,7 @@ There is no takeable gold candlestick in the base game (the golden urn is a Thie
 
 Repair is a field refit. Vanilla has no durability. For 2 leather strips, 1 iron ingot and `CQM_RepairGold` (50), the follower gets +40 armor and +10% weapon damage for `CQM_RepairDays` (3) in-game days. One game-time timer tracks the earliest expiry.
 
-If [Ember Smithing](https://github.com/Blackshield-Company/ember-smithing) is installed, the repair menu also offers **Ember repair**: 2 charcoal and 1 fire salts (both vanilla), for +60 armor and +15% weapon damage. The option is hidden when that mod is absent. The check is a soft `GetFormFromFile` on `EMB_EmberForgedIronSword`. This mod does not master Ember Smithing.
+If [Ember Smithing](https://github.com/synthalorian/ember-smithing) is installed, the repair menu also offers **Ember repair**: 2 charcoal and 1 fire salts (both vanilla), for +60 armor and +15% weapon damage. The option is hidden when that mod is absent. The check is a soft `GetFormFromFile` on `EMB_EmberForgedIronSword`. This mod does not master Ember Smithing.
 
 Each follower gets a stash the first time you open one, up to 8. A slot whose actor is dead or gone is reused; the chest is not emptied. When all 8 are held by living actors, she reports that the stash slots are full. Open with the chest itself (`Activate`).
 
@@ -74,7 +74,7 @@ Brynja borrows Uthgerd the Unbroken's face through a Use Traits template, so the
 
 ## Compatibility
 
-No shared records with the other fifteen mods. She does not use the vanilla follower quest, so she does not fight [Sellsword Roster](https://github.com/Blackshield-Company/sellsword-roster) or the [Blackshield Company](https://github.com/Blackshield-Company/blackshield-company) sellsword for the one follower slot. Those sellswords are teammates, so they show up in her follower list and can take a refit or a stash. Ember Smithing is optional and is not a master. War Banners has its own nearest-teammate quest; this one is separate and only runs while the menu is open.
+No shared records with the other fifteen mods. She does not use the vanilla follower quest, so she does not fight [Sellsword Roster](https://github.com/synthalorian/sellsword-roster) or the [Blackshield Company](https://github.com/synthalorian/blackshield-company) sellsword for the one follower slot. Those sellswords are teammates, so they show up in her follower list and can take a refit or a stash. Ember Smithing is optional and is not a master. War Banners has its own nearest-teammate quest; this one is separate and only runs while the menu is open.
 
 ## Known issues (early beta)
 
@@ -116,7 +116,7 @@ Donations are optional. Nothing in the mod is gated on them.
 - GitHub Sponsors: https://github.com/sponsors/synthalorian
 - Ko-fi: https://ko-fi.com/synthalorian
 
-<p><img src="docs/knight-a.gif" width="64" height="56" alt="Knight A, the Blackshield Company mascot"><br><sub>A <a href="https://github.com/Blackshield-Company">Blackshield Company</a> mod.</sub></p>
+<p><img src="docs/knight-a.gif" width="64" height="56" alt="Knight A, the Blackshield Company mascot"><br><sub>A <a href="https://github.com/synthalorian">Blackshield Company</a> mod.</sub></p>
 
 ## License
 

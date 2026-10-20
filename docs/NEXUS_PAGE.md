@@ -64,7 +64,7 @@ set CQM_CatchupDistance to 3000
 [size=4][b]The series[/b][/size]
 Part of the Blackshield series. She does not take the follower slot used by Sellsword Roster or the Blackshield Company sellsword. Those companions can still use her refit and her stashes.
 
-[url=https://github.com/Blackshield-Company/company-quartermaster]Source and issues[/url].
+[url=https://github.com/synthalorian/company-quartermaster]Source and issues[/url].
 
 Donations are optional. Nothing is gated.
 [url=https://github.com/sponsors/synthalorian]GitHub Sponsors[/url] · [url=https://ko-fi.com/synthalorian]Ko-fi[/url]
