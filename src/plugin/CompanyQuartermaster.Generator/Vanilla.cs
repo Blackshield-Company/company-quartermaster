@@ -113,5 +113,5 @@ internal static class Vanilla
     public static readonly FormKey DwarvenPot = K(0x025CFE);
     public static readonly FormKey DwarvenUrn = K(0x025D7C);
 
-    public const string MeshChest = @"Clutter\Containers\Chest01.nif";
+    public const string MeshChest = @"Clutter\Containers\Chest01\Chest01.nif";
 }
