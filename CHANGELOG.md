@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.5] - 2026-11-26
+
+### Fixed
+- The company stores and stash chests used the model path `Clutter\Containers\Chest01.nif`, which is not in the game. They now use `Clutter\Containers\Chest01\Chest01.nif`, the vanilla chest model used by most merchant and storage chests in Skyrim.esm (including Eorlund's and the Civil War quartermaster chests). No FormIDs changed.
+
 ## [0.2.4] - 2026-10-15
 
 ### Fixed
