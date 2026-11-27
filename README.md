@@ -13,7 +13,7 @@ Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-
 
 ## Install
 
-Use the FOMOD. It installs `CompanyQuartermaster.esp`, the scripts, and `SEQ/CompanyQuartermaster.seq`. Papyrus sources are optional. Enable the plugin. It is ESL-flagged, so it does not take a full load-order slot. Load order does not matter: it has no master but Skyrim.esm and it overrides nothing.
+Use the FOMOD. It installs `CompanyQuartermaster.esp`, the scripts, and `seq/CompanyQuartermaster.seq`. Papyrus sources are optional. Enable the plugin. It is ESL-flagged, so it does not take a full load-order slot. Load order does not matter: it has no master but Skyrim.esm and it overrides nothing.
 
 ## How it works
 
