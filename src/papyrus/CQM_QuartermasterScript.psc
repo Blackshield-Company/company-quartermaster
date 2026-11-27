@@ -72,6 +72,7 @@ Message Property CQM_MsgFallen Auto
 Int Property STASH_COUNT = 8 AutoReadOnly
 Int Property FOLLOWER_COUNT = 5 AutoReadOnly
 
+Bool arraysReady
 Actor[] stashOwners
 Actor[] repairActors
 Float[] repairUntil
@@ -99,11 +100,25 @@ Function GameLoaded()
 	ScheduleRepair()
 EndFunction
 
+; Never compare these arrays with None. The compiler turns "arr == None" into
+; "cast None to Actor[]" on an Actor[] temp, the game logs "Cannot cast from None
+; to Actor[]", the temp loses its array type, and the "new Actor[8]" that follows
+; fails with "Cannot create an array into a non-array variable". The arrays then
+; stay None for good (stashes and refits break). A flag avoids the cast; the saved
+; arrays are only measured once they exist.
 Function EnsureArrays()
-	If stashOwners == None || stashOwners.Length < STASH_COUNT
+	If !arraysReady
+		stashOwners = new Actor[8]
+		repairActors = new Actor[5]
+		repairUntil = new Float[5]
+		repairKind = new Int[5]
+		arraysReady = True
+		Return
+	EndIf
+	If stashOwners.Length < STASH_COUNT
 		stashOwners = new Actor[8]
 	EndIf
-	If repairActors == None || repairActors.Length < FOLLOWER_COUNT
+	If repairActors.Length < FOLLOWER_COUNT
 		repairActors = new Actor[5]
 		repairUntil = new Float[5]
 		repairKind = new Int[5]
@@ -267,6 +282,7 @@ EndFunction
 
 Function OfferHire()
 	If !CanHireHere()
+		Debug.Trace("[CompanyQuartermaster] CQM_ not at an inn or HQ, showing the not-an-inn notice")
 		CQM_MsgNotInn.Show()
 		Return
 	EndIf

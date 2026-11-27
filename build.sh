@@ -32,6 +32,7 @@ mkdir -p "$STAGE/00 Core/Scripts" "$STAGE/10 Papyrus Sources/Source/Scripts" "$D
 
 echo "== Papyrus"
 "$KIT/papyrus/build-papyrus.sh" -i src/papyrus -o "$STAGE/00 Core/Scripts" "${PAPYRUS_ARGS[@]}"
+python3 tools/check_pex_array_none.py "$STAGE/00 Core/Scripts/"*.pex
 cp src/papyrus/*.psc "$STAGE/10 Papyrus Sources/Source/Scripts/"
 
 echo "== Plugin"
