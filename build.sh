@@ -28,10 +28,11 @@ done
 
 echo "== $NAME $VERSION"
 rm -rf "$STAGE"
-mkdir -p "$STAGE/00 Core/Scripts" "$STAGE/10 Papyrus Sources/Source/Scripts" "$DIST_DIR"
+mkdir -p "$STAGE/00 Core/scripts" "$STAGE/10 Papyrus Sources/Source/Scripts" "$DIST_DIR"
 
 echo "== Papyrus"
-"$KIT/papyrus/build-papyrus.sh" -i src/papyrus -o "$STAGE/00 Core/Scripts" "${PAPYRUS_ARGS[@]}"
+"$KIT/papyrus/build-papyrus.sh" -i src/papyrus -o "$STAGE/00 Core/scripts" "${PAPYRUS_ARGS[@]}"
+python3 tools/check_pex_array_none.py "$STAGE/00 Core/scripts/"*.pex
 cp src/papyrus/*.psc "$STAGE/10 Papyrus Sources/Source/Scripts/"
 
 echo "== Plugin"
@@ -39,8 +40,12 @@ dotnet run --project src/plugin/CompanyQuartermaster.Generator -c Release -- \
   --out "$BUILD/plugin" --ids src/plugin/formids.json --papyrus src/papyrus
 python3 "$KIT/esp_check.py" "$BUILD/plugin/$NAME.esp"
 python3 tools/check_npc_appearance.py "$BUILD/plugin/$NAME.esp"
-# plugin + SEQ/
+# plugin + seq/
 cp -r "$BUILD/plugin/." "$STAGE/00 Core/"
+# Ship the folders the game asks for, in lowercase. On Linux (Proton) the game opens
+# "scripts\" and "seq\" with exactly that case, and a mod manager that deploys a
+# "Scripts" or "SEQ" folder next to a lowercase one leaves the mod's files unread.
+if [[ -d "$STAGE/00 Core/SEQ" ]]; then mv "$STAGE/00 Core/SEQ" "$STAGE/00 Core/seq"; fi
 
 echo "== FOMOD"
 ARCHIVE="$DIST_DIR/$NAME-$VERSION.zip"

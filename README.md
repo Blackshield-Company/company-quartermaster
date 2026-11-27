@@ -4,7 +4,7 @@
 
 Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-Hand at an inn. She sells supplies, buys clutter in bulk, refits your followers' gear, and keeps a stash for each of them. She is not a follower.
 
-**Status: v0.2.5, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md). Saves from 0.1.0 through 0.2.4 keep working: existing FormIDs are unchanged.
+**Status: v0.2.6, early beta.** It passes every automated check in the build (Papyrus compile, plugin validation, byte-exact round trip, SEQ check, FOMOD schema, cross-mod compatibility check) but has not been playtested in game yet. Expect rough edges and please report what you find. See [docs/TESTING.md](docs/TESTING.md). Saves from 0.1.0 through 0.2.5 keep working: existing FormIDs are unchanged.
 
 - Game: Skyrim Special Edition / Anniversary Edition 1.6.x (1.5.97 also works). Runs on Windows, and on Linux through Proton.
 - Requirements: just the base game. No SKSE, SkyUI, DLC or Creation Club content.
@@ -13,7 +13,7 @@ Stores for a company that has no hall. Company Quartermaster hires Brynja Tally-
 
 ## Install
 
-Use the FOMOD. It installs `CompanyQuartermaster.esp`, the scripts, and `SEQ/CompanyQuartermaster.seq`. Papyrus sources are optional. Enable the plugin. It is ESL-flagged, so it does not take a full load-order slot. Load order does not matter: it has no master but Skyrim.esm and it overrides nothing.
+Use the FOMOD. It installs `CompanyQuartermaster.esp`, the scripts, and `seq/CompanyQuartermaster.seq`. Papyrus sources are optional. Enable the plugin. It is ESL-flagged, so it does not take a full load-order slot. Load order does not matter: it has no master but Skyrim.esm and it overrides nothing.
 
 ## How it works
 

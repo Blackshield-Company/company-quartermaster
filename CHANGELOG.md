@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.2.6] - 2026-11-27
+
+### Fixed
+- Every use of the lesser power, and every load, logged `Cannot cast from None to Actor[]` and `Cannot create an array into a non-array variable` in `EnsureArrays()`. The `== None` check on the stash and repair arrays made the game drop the array type from its temporary, so the arrays were never created. Follower stashes and field refits read those arrays, so they could not work. The arrays are now created once, guarded by a flag, with no comparison to None. The build also fails if a compiled script compares an array with None. No FormIDs changed. Saves keep working: the arrays were never created before, so there is nothing to carry over.
+- The FOMOD now installs `scripts/` and `seq/` in lowercase (they were `Scripts/` and `SEQ/`). The game opens those folders by their lowercase names. On Linux (Proton), a Data folder that also holds `Scripts/` or `SEQ/` from another mod is read only from the lowercase one, so the compiled scripts and the start-game-enabled SEQ file were not found and the mod's quests and power did nothing. Nothing changes on Windows, where folder case does not matter. No FormIDs changed.
+
 ## [0.2.5] - 2026-11-26
 
 ### Fixed
